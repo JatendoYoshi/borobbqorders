@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kitchen</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Kitchen Orders</h1>
-    <div id="orders" class="orders-grid"></div>
-  </div>
 
-  <script type="module" src="kitchen.js"></script>
+<nav>
+  <div><strong>🍔 OrderSys</strong></div>
+  <div>
+    <a href="order.html">Order</a>
+    <a href="kitchen.html">Kitchen</a>
+    <a href="admin.html">Admin</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>Kitchen Display</h1>
+  <div id="orders"></div>
+</div>
+
+<script type="module" src="kitchen.js"></script>
 </body>
 </html>

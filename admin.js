@@ -1,49 +1,29 @@
-import {
-  db,
-  collection,
-  addDoc,
-  deleteDoc,
-  doc,
-  onSnapshot,
-} from './firebase.js';
+import { db, collection, addDoc, deleteDoc, doc, onSnapshot } from "./firebase.js";
 
-const nameInput = document.getElementById('itemName');
-const priceInput = document.getElementById('itemPrice');
-const menuDiv = document.getElementById('menuItems');
+const name = document.getElementById("name");
+const price = document.getElementById("price");
+const list = document.getElementById("menuList");
 
-onSnapshot(collection(db, 'menu'), snapshot => {
-  menuDiv.innerHTML = '<h2>Menu Items</h2>';
+onSnapshot(collection(db,"menu"), snap => {
+  list.innerHTML = "";
 
-  snapshot.docs.forEach(docItem => {
-    const item = docItem.data();
+  snap.docs.forEach(d => {
+    const item = d.data();
 
-    const row = document.createElement('div');
-    row.className = 'menu-row';
+    const row = document.createElement("div");
+    row.innerHTML = `${item.name} £${item.price} <button>Delete</button>`;
 
-    row.innerHTML = `
-      <span>${item.name} - £${item.price}</span>
-      <button class="action-btn red">Delete</button>
-    `;
-
-    row.querySelector('button').onclick = async () => {
-      await deleteDoc(doc(db, 'menu', docItem.id));
+    row.querySelector("button").onclick = () => {
+      deleteDoc(doc(db,"menu",d.id));
     };
 
-    menuDiv.appendChild(row);
+    list.appendChild(row);
   });
 });
 
-document.getElementById('addItemBtn').onclick = async () => {
-  const name = nameInput.value.trim();
-  const price = Number(priceInput.value);
-
-  if (!name || !price) return;
-
-  await addDoc(collection(db, 'menu'), {
-    name,
-    price,
+document.getElementById("add").onclick = async () => {
+  await addDoc(collection(db,"menu"), {
+    name: name.value,
+    price: Number(price.value)
   });
-
-  nameInput.value = '';
-  priceInput.value = '';
 };

@@ -1,53 +1,31 @@
-import {
-  db,
-  collection,
-  onSnapshot,
-  updateDoc,
-  doc,
-  query,
-  orderBy,
-} from './firebase.js';
+import { db, collection, onSnapshot, updateDoc, doc, query, orderBy } from "./firebase.js";
 
-const ordersDiv = document.getElementById('orders');
+const ordersDiv = document.getElementById("orders");
 
-const q = query(
-  collection(db, 'orders'),
-  orderBy('createdAt', 'desc')
-);
+const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
 
-onSnapshot(q, snapshot => {
-  ordersDiv.innerHTML = '';
+onSnapshot(q, snap => {
+  ordersDiv.innerHTML = "";
 
-  snapshot.docs.forEach(documentItem => {
-    const order = {
-      id: documentItem.id,
-      ...documentItem.data(),
-    };
+  snap.docs.forEach(d => {
+    const o = { id: d.id, ...d.data() };
 
-    if (order.completed) return;
+    if (o.completed) return;
 
-    const card = document.createElement('div');
-    card.className = 'card order-card';
+    const div = document.createElement("div");
+    div.className = "order-card";
 
-    card.innerHTML = `
-      <h2>Order #${order.orderNumber}</h2>
-      <p>${order.time || ''}</p>
-      <strong>£${order.total?.toFixed(2)}</strong>
-      <h4>Items</h4>
-      <ul>
-        ${order.items.map(i => `<li>${i.name}</li>`).join('')}
-      </ul>
-      <button class="action-btn green">
-        Complete Order
-      </button>
+    div.innerHTML = `
+      <h2>Order #${o.orderNumber}</h2>
+      <span class="badge">£${o.total}</span>
+      <ul>${o.items.map(i=>`<li>${i.name}</li>`).join("")}</ul>
+      <button class="btn-success">Complete</button>
     `;
 
-    card.querySelector('button').onclick = async () => {
-      await updateDoc(doc(db, 'orders', order.id), {
-        completed: true,
-      });
+    div.querySelector("button").onclick = () => {
+      updateDoc(doc(db,"orders",o.id), { completed:true });
     };
 
-    ordersDiv.appendChild(card);
+    ordersDiv.appendChild(div);
   });
 });
