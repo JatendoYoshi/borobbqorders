@@ -1,0 +1,66 @@
+* {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(180px,1fr));
+  gap: 16px;
+}
+
+.menu-item,
+.big-btn,
+.action-btn {
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.menu-item {
+  background: white;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 1rem;
+  box-shadow: 0 6px 18px rgba(0,0,0,.08);
+}
+
+.menu-item:hover,
+.action-btn:hover,
+.big-btn:hover {
+  transform: translateY(-2px);
+}
+
+.big-btn,
+.action-btn {
+  display: inline-block;
+  text-decoration: none;
+  padding: 16px 22px;
+  color: white;
+  margin: 8px 0;
+}
+
+.green { background: #16a34a; }
+.blue { background: #2563eb; }
+.red { background: #dc2626; }
+
+.basket-card ul {
+  padding-left: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+
+.menu-row,
+.order-card {
+  margin-top: 12px;
+}
+
+@media (max-width: 900px) {
+  .split-layout {
+    grid-template-columns: 1fr;
+  }
+}
